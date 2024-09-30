@@ -17,3 +17,21 @@ export const getAuthSession = async (
   const session = await getServerSession(...parameters, authOptions);
   return session;
 };
+
+export const getRequiredAuthSession = async (
+  ...parameters: ParametersGetServerSession
+) => {
+  const session = await getAuthSession(...parameters);
+
+  if (!session?.user) {
+    throw new Error("User not found");
+  }
+
+  return session as {
+    user: {
+      id: string;
+      email?: string;
+      image?: string;
+    };
+  };
+};

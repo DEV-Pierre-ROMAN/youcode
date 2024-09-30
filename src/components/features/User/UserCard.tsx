@@ -10,7 +10,7 @@ import {
 import { Session } from "next-auth";
 import UserAvatar from "./UserAvatar";
 import LogoutButton from "../auth/LogoutButton";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
 type UserCardProps = {
@@ -36,7 +36,7 @@ export default function UserProfile(props: UserCardProps) {
         </Link>
         <Link
           className={buttonVariants({ variant: "outline", size: "lg" })}
-          href="/admin"
+          href="/admin/courses"
         >
           Admin
         </Link>
