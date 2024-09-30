@@ -8,20 +8,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Loader from "@/components/ui/Loader";
 import { useMutation } from "@tanstack/react-query";
-import { LogOut } from "lucide-react";
+import { LogOut, User2 } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import UserAvatar from "@/components/features/User/UserAvatar";
+import Link from "next/link";
 
 type LoggedInButtonProps = {
   user: Session["user"];
@@ -38,21 +40,19 @@ export default function LoggedInButton(props: LoggedInButtonProps) {
       <AlertDialog>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Avatar className="cursor-pointer">
-              <AvatarFallback>
-                {props.user?.name?.charAt(0).toUpperCase()}
-              </AvatarFallback>
-              {props.user.image && (
-                <AvatarImage
-                  src={props.user.image}
-                  alt={props.user.name ?? "user picture"}
-                />
-              )}
-            </Avatar>
+            <button>
+              <UserAvatar user={props.user} />
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>{props.user.name}</DropdownMenuLabel>
-
+            <DropdownMenuItem asChild>
+              <Link className="cursor-pointer" href="/account">
+                <User2 className="mr-2 size-4" />
+                Mon compte
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <AlertDialogTrigger asChild>
               <DropdownMenuItem className="cursor-pointer">
                 <LogOut className="mr-2 size-4" />
