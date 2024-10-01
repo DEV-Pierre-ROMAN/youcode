@@ -80,6 +80,7 @@ model Course {
   users            CourseOnUser[]
 }
 
+
 model Lesson {
   id  String @id @default(cuid())
   name  String
@@ -114,7 +115,7 @@ model LessonOnUser {
   @@unique([userId, lessonId])
 }
 
-enum Progress{
+enum Progress {
   NOT_STARTED
   IN_PROGRESS
   COMPLETED

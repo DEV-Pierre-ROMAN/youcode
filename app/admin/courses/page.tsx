@@ -44,20 +44,20 @@ export default async function coursesUserList() {
         </Link>
       </LayoutHeader>
       <LayoutContent>
-        <Card className="pt-6">
+        <Card>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-1/5">Image</TableHead>
+                  <TableHead className="w-[10%]">Image</TableHead>
                   <TableHead>Name</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {courses.map((course) => (
                   <TableRow key={course.id}>
-                    <TableCell className="w-1/5">
-                      <Avatar className="rounded">
+                    <TableCell className="w-[10%]">
+                      <Avatar className=" rounded">
                         <AvatarFallback>
                           {course.name.charAt(0).toUpperCase()}
                         </AvatarFallback>
