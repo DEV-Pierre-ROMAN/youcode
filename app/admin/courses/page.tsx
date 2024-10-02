@@ -62,7 +62,11 @@ export default async function coursesUserList() {
                           {course.name.charAt(0).toUpperCase()}
                         </AvatarFallback>
                         {course.image && (
-                          <AvatarImage src={course.image} alt={course.name} />
+                          <AvatarImage
+                            className="object-cover"
+                            src={course.image}
+                            alt={course.name}
+                          />
                         )}
                       </Avatar>
                     </TableCell>

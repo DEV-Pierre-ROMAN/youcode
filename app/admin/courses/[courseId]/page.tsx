@@ -12,9 +12,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Typography } from "@/components/ui/Typography";
 import { getRequiredAuthSession } from "@/lib/auth";
-import prisma from "@/lib/prisma";
 import { ArrowLeft, Edit2 } from "lucide-react";
 import Link from "next/link";
+import { getCourse } from "./course.query";
 
 export default async function coursesDetailPage({
   params: { courseId },
@@ -24,34 +24,7 @@ export default async function coursesDetailPage({
   const session = await getRequiredAuthSession();
 
   //fetch the course data
-  const course = await prisma.course.findUnique({
-    where: {
-      creatorId: session.user.id,
-      id: courseId,
-    },
-    include: {
-      _count: {
-        select: {
-          lessons: true,
-          users: true,
-        },
-      },
-      users: {
-        include: {
-          user: true,
-        },
-        orderBy: {
-          user: {
-            name: "asc",
-          },
-        },
-      },
-    },
-  });
-
-  if (!course) {
-    throw new Error("Course not found");
-  }
+  const course = await getCourse({ userId: session.user.id, courseId });
 
   return (
     <Layout>
@@ -65,14 +38,14 @@ export default async function coursesDetailPage({
         <div className="flex gap-2">
           <Link
             className={buttonVariants({ variant: "secondary" })}
-            href={`/account/courses/${course.id}/edit`}
+            href={`/admin/courses/${course.id}/edit`}
           >
             <Edit2 size={15} className="sm:mr-2" />
             <span className="hidden sm:block">Modifier</span>
           </Link>
           <Link
             className={buttonVariants({ variant: "secondary" })}
-            href={`/account/courses/${course.id}/lessons`}
+            href={`/admin/courses/${course.id}/lessons`}
           >
             <Edit2 size={15} className="mr-2" />
             <span className="block sm:hidden">leçons</span>
@@ -82,12 +55,16 @@ export default async function coursesDetailPage({
       </LayoutHeader>
       <LayoutContent>
         <div className="flex flex-col gap-4 sm:flex-row">
-          <Avatar className="m-auto aspect-square h-auto w-4/5 rounded sm:hidden">
+          <Avatar className="m-auto aspect-square h-auto w-4/5 rounded object-cover sm:hidden">
             <AvatarFallback>
               {course.name.charAt(0).toUpperCase()}
             </AvatarFallback>
             {course.image && (
-              <AvatarImage src={course.image} alt={course.name} />
+              <AvatarImage
+                className="object-cover"
+                src={course.image}
+                alt={course.name}
+              />
             )}
           </Avatar>
           <div className="flex-1">
@@ -110,7 +87,11 @@ export default async function coursesDetailPage({
                 {course.name.charAt(0).toUpperCase()}
               </AvatarFallback>
               {course.image && (
-                <AvatarImage src={course.image} alt={course.name} />
+                <AvatarImage
+                  className="object-cover"
+                  src={course.image}
+                  alt={course.name}
+                />
               )}
             </Avatar>
             <Card className="flex justify-center p-2">
