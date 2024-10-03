@@ -9,7 +9,9 @@ type UserAvatarProps = {
 export default function UserAvatar({ user, ...props }: UserAvatarProps) {
   return (
     <Avatar {...props}>
-      <AvatarFallback>{user?.name?.charAt(0).toUpperCase()}</AvatarFallback>
+      <AvatarFallback className="text-[60%]">
+        {user?.name?.charAt(0).toUpperCase()}
+      </AvatarFallback>
       {user.image && (
         <AvatarImage src={user.image} alt={user.name ?? "user picture"} />
       )}
