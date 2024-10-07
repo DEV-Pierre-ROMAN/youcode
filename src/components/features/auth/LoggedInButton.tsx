@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Loader from "@/components/ui/Loader";
 import { useMutation } from "@tanstack/react-query";
-import { LogOut, User2 } from "lucide-react";
+import { Book, LogOut, User2 } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import UserAvatar from "@/components/features/User/UserAvatar";
@@ -50,6 +50,12 @@ export default function LoggedInButton(props: LoggedInButtonProps) {
               <Link className="cursor-pointer" href="/account">
                 <User2 className="mr-2 size-4" />
                 Mon compte
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link className="cursor-pointer" href="/courses">
+                <Book className="mr-2 size-4" />
+                Mes cours
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />

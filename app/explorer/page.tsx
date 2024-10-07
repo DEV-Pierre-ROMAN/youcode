@@ -4,8 +4,8 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@/components/layout/layout";
-import CourseItem from "./CourseItem";
-import { getCourses } from "./courses.query";
+import CourseItem from "../courses/CourseItem";
+import { getCourses } from "../courses/courses.query";
 
 export default async function courseListPage() {
   const courses = await getCourses();
