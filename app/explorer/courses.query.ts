@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function getCourses() {
   const courses = await prisma.course.findMany({
@@ -17,3 +18,5 @@ export async function getCourses() {
 
   return courses;
 }
+
+export type CourseCard = Prisma.PromiseReturnType<typeof getCourses>[number];

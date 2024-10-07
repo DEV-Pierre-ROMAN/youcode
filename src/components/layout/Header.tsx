@@ -24,10 +24,10 @@ export function Header() {
           <Typography
             variant="lead"
             as={Link}
-            href="/courses"
+            href="/explorer"
             className="hover:text-accent-foreground"
           >
-            Courses
+            Explorer
           </Typography>
         </div>
 
