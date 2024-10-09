@@ -10,8 +10,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Typography } from "@/components/ui/Typography";
 import { getRequiredAuthSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { cn } from "@/lib/utils";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
 
@@ -73,7 +71,6 @@ export default async function courseLessonsListPage({
                 <Typography variant="large">{lesson.name}</Typography>
                 <div className="flex items-center gap-1">
                   <Badge>{lesson.state}</Badge>
-                  <HamburgerMenuIcon className={cn("ml-2", "cursor-move")} />
                 </div>
               </div>
             ))}

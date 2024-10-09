@@ -2,10 +2,11 @@ import UserAvatar from "@/components/features/User/UserAvatar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/Typography";
 import { CourseCard } from "./courses.query";
+import Link from "next/link";
 
 export default function CourseItem({ course }: { course: CourseCard }) {
   return (
-    <div className="relative overflow-hidden">
+    <Link href={`/courses/${course.id}`} className="relative overflow-hidden">
       <Avatar className="aspect-square h-60 w-full rounded md:h-auto">
         <AvatarFallback className="rounded">
           {course.name.charAt(0).toUpperCase()}
@@ -25,6 +26,6 @@ export default function CourseItem({ course }: { course: CourseCard }) {
         </div>
         <Typography variant="h3">{course.name}</Typography>
       </div>
-    </div>
+    </Link>
   );
 }
