@@ -1,5 +1,5 @@
-import MDXRender from "@/components/features/mdx/MDXRender";
 import UserAvatar from "@/components/features/User/UserAvatar";
+import { MarkdownProse } from "@/components/features/mdx/MarkdownProse";
 import {
   Layout,
   LayoutContent,
@@ -74,7 +74,7 @@ export default async function CourseDetailPage({
             <CardTitle>Description</CardTitle>
           </CardHeader>
           <CardContent>
-            <MDXRender source={course.presentation || "No description"} />
+            <MarkdownProse markdown={course.presentation || "No description"} />
           </CardContent>
         </Card>
         <Card>
