@@ -10,11 +10,12 @@ import { getRequiredAuthSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import z from "zod";
 import { revalidatePath } from "next/cache";
+import { CourseForm } from "./CourseForm";
 
 type CourseEditPageProps = {
   params: { courseId: string };
@@ -41,10 +42,16 @@ export default async function CourseEditPage({
       id: courseId,
       creatorId: user.id,
     },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      presentation: true,
+    },
   });
 
   if (!courseDetail) {
-    throw new Error("Course not found");
+    notFound();
   }
 
   async function saveCourse(formData: FormData): Promise<void> {
@@ -90,47 +97,7 @@ export default async function CourseEditPage({
       <LayoutContent>
         <Card>
           <CardContent className="mt-6">
-            <form className="flex flex-col gap-4" action={saveCourse}>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="image">Image</label>
-                <input
-                  className="rounded border p-2"
-                  type="text"
-                  name="image"
-                  id="image"
-                  defaultValue={courseDetail?.image || ""}
-                />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="name">Name</label>
-                <input
-                  className="rounded border p-2"
-                  type="text"
-                  name="name"
-                  id="name"
-                  defaultValue={courseDetail?.name || ""}
-                />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="presentation">Presentation</label>
-                <Textarea
-                  className="rounded border p-2"
-                  name="presentation"
-                  id="presentation"
-                  defaultValue={courseDetail?.presentation || ""}
-                />
-              </div>
-
-              {searchParams.error && (
-                <Typography className="text-red-500">
-                  {searchParams.error}
-                </Typography>
-              )}
-
-              <Button className="mt-6" type="submit">
-                Save
-              </Button>
-            </form>
+            <CourseForm defaultValues={courseDetail} />
           </CardContent>
         </Card>
       </LayoutContent>
