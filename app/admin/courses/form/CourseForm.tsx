@@ -11,7 +11,10 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { CourseFormSchema } from "./course.schema";
-import { courseActionEdit } from "./course.action";
+import {
+  courseActionCreate,
+  courseActionEdit,
+} from "../[courseId]/course.action";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -57,6 +60,20 @@ export const CourseForm = (props: CourseFormProps) => {
           return;
         } else {
           // create course
+          const result = await courseActionCreate({
+            ...values,
+          });
+
+          if (!result) {
+            toast.error("Something went wrong");
+          }
+
+          if (result && result.data) {
+            toast.success("Course created successfully");
+
+            router.push(`/admin/courses/${result.data.id}`);
+            router.refresh();
+          }
         }
       }}
     >

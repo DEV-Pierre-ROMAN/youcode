@@ -38,7 +38,7 @@ export default async function coursesUserList() {
         <LayoutTitle>Courses</LayoutTitle>
         <Link
           className={buttonVariants({ variant: "secondary" })}
-          href="/account/courses/new"
+          href="/admin/courses/new"
         >
           New Course
         </Link>
