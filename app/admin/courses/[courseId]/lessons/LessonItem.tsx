@@ -7,6 +7,7 @@ import { LessonFastForm } from "./form/LessonFastForm";
 import { LessonFormSchema } from "./form/lesson.schema";
 import { useRouter } from "next/navigation";
 import { Edit } from "lucide-react";
+import Link from "next/link";
 
 export type LessonItemProps = {
   lesson?: {
@@ -48,7 +49,9 @@ export const LessonItem = ({
       ) : (
         lesson && (
           <>
-            <Typography variant="large">{lesson.name}</Typography>
+            <Link href={`/admin/courses/${courseId}/lessons/${lesson.id}`}>
+              <Typography variant="large">{lesson.name}</Typography>
+            </Link>
             <div className="flex items-center gap-6">
               <Badge>{lesson.state}</Badge>
               <div>

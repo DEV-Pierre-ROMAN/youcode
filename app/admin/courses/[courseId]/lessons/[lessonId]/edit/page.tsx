@@ -10,14 +10,14 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { LessonForm } from "../form/LessonFastForm";
+// import { LessonForm } from "../../form/LessonFastForm";
 type lessonEditPageProps = {
-  params: { lessonId: string };
+  params: { lessonId: string; courseId: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export default async function lessonEditPage({
-  params: { lessonId },
+  params: { courseId, lessonId },
 }: lessonEditPageProps) {
   const session = await getRequiredAuthSession();
 
@@ -45,7 +45,7 @@ export default async function lessonEditPage({
     <Layout>
       <LayoutHeader>
         <LayoutTitle className="flex items-center">
-          <Link href={`/admin/lessons/${lessonId}`}>
+          <Link href={`/admin/courses/${courseId}/lessons/${lessonId}`}>
             <ArrowLeft size={28} className="mr-2" />
           </Link>
           lesson Edit
@@ -53,9 +53,7 @@ export default async function lessonEditPage({
       </LayoutHeader>
       <LayoutContent>
         <Card>
-          <CardContent className="mt-6">
-            <LessonForm defaultValues={lessonDetail} />
-          </CardContent>
+          <CardContent className="mt-6"></CardContent>
         </Card>
       </LayoutContent>
     </Layout>
