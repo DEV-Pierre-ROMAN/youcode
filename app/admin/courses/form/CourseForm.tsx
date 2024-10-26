@@ -11,10 +11,7 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { CourseFormSchema } from "./course.schema";
-import {
-  courseActionCreate,
-  courseActionEdit,
-} from "../[courseId]/course.action";
+import { courseActionCreate, courseActionEdit } from "./course.action";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -47,7 +44,7 @@ export const CourseForm = (props: CourseFormProps) => {
           }
 
           if (result && result.data) {
-            toast.success(result.data);
+            toast.success(result.data.message);
 
             router.push(`/admin/courses/${props.defaultValues.id}`);
             router.refresh();
@@ -69,9 +66,9 @@ export const CourseForm = (props: CourseFormProps) => {
           }
 
           if (result && result.data) {
-            toast.success("Course created successfully");
+            toast.success(result.data.message);
 
-            router.push(`/admin/courses/${result.data.id}`);
+            router.push(`/admin/courses/${result.data.course.id}`);
             router.refresh();
           }
         }

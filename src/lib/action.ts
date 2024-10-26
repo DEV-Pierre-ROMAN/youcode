@@ -23,13 +23,13 @@ export const authenticatedAction = action.use(async ({ next }) => {
 
   const user = session?.user;
 
-  if (!user) {
+  if (!user || !user.id) {
     throw new ServerError("You must be logged in to perform this action.");
   }
 
   return next({
     ctx: {
-      userId: user?.id,
+      userId: user.id,
       user,
     },
   });

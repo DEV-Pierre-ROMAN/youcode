@@ -1,6 +1,6 @@
 "use server";
 
-import { authenticatedAction, ServerError } from "@/lib/action";
+import { authenticatedAction } from "@/lib/action";
 import { CourseFormSchema } from "./course.schema";
 import z from "zod";
 import prisma from "@/lib/prisma";
@@ -13,7 +13,7 @@ const CourseActionEditProps = z.object({
 export const courseActionEdit = authenticatedAction
   .schema(CourseActionEditProps)
   .action(async ({ parsedInput, ctx }) => {
-    await prisma.course.update({
+    const course = await prisma.course.update({
       where: {
         id: parsedInput.courseId,
         creatorId: ctx.userId,
@@ -21,17 +21,13 @@ export const courseActionEdit = authenticatedAction
       data: parsedInput.data,
     });
 
-    return "Course updated successfully";
+    return { message: "Course updated successfully", course };
   });
 
 export const courseActionCreate = authenticatedAction
   .schema(CourseFormSchema)
   .action(async ({ parsedInput, ctx }) => {
-    if (!ctx.userId) {
-      throw new ServerError("You need to be logged in to create a course");
-    }
-
-    const newCourse = await prisma.course.create({
+    const course = await prisma.course.create({
       data: {
         name: parsedInput.name,
         creatorId: ctx.userId,
@@ -39,6 +35,8 @@ export const courseActionCreate = authenticatedAction
       },
     });
 
-    return newCourse;
-    // return "Course created successfully";
+    return {
+      message: "Course created successfully",
+      course,
+    };
   });
