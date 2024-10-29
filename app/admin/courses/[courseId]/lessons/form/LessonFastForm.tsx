@@ -8,7 +8,7 @@ import {
   FormMessage,
   useZodForm,
 } from "@/components/ui/form";
-import { LessonFormSchema } from "./lesson.schema";
+import { LESSON_STATE, LessonFormSchema } from "./lesson.schema";
 import { lessonActionCreate, lessonActionEdit } from "./lesson.action";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -112,9 +112,11 @@ export const LessonFastForm = ({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="HIDDEN">Hidden</SelectItem>
-                      <SelectItem value="PUBLISHED">Published</SelectItem>
-                      <SelectItem value="PUBLIC">Public</SelectItem>
+                      {LESSON_STATE.map((state) => (
+                        <SelectItem key={state} value={state}>
+                          {state}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>

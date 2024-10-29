@@ -84,7 +84,7 @@ model Course {
 model Lesson {
   id  String @id @default(cuid())
   name  String
-  rank  Int
+  rank  Int @default(autoincrement())
   content  String
   state  LessonState @default(HIDDEN)
 

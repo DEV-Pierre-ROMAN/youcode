@@ -29,7 +29,7 @@ export default function BreadcrumbSite() {
         )}
         {pathname?.map((path, index) => (
           <>
-            <BreadcrumbItem key={index}>
+            <BreadcrumbItem key={path}>
               <BreadcrumbLink
                 href={`/${pathname.slice(0, index + 1).join("/")}`}
               >
