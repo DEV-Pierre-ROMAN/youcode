@@ -26,6 +26,29 @@ export const lessonActionEdit = authenticatedAction
     return { message: "Lesson updated successfully", lesson };
   });
 
+export const lessonContentActionEdit = authenticatedAction
+  .schema(
+    z.object({
+      lessonId: z.string(),
+      content: z.string(),
+    })
+  )
+  .action(async ({ parsedInput, ctx }) => {
+    const lesson = await prisma.lesson.update({
+      where: {
+        id: parsedInput.lessonId,
+        course: {
+          creatorId: ctx.userId,
+        },
+      },
+      data: {
+        content: parsedInput.content,
+      },
+    });
+
+    return { message: "Lesson updated successfully", lesson };
+  });
+
 export const lessonActionCreate = authenticatedAction
   .schema(LessonFastFormCreateSchema)
   .action(async ({ parsedInput, ctx }) => {

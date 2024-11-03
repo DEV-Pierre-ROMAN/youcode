@@ -10,7 +10,10 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { MdxEditor } from "./MdxEditor";
+
 // import { LessonForm } from "../../form/LessonFastForm";
+
 type lessonEditPageProps = {
   params: { lessonId: string; courseId: string };
   searchParams: { [key: string]: string | string[] | undefined };
@@ -34,8 +37,11 @@ export default async function lessonEditPage({
       id: true,
       name: true,
       state: true,
+      content: true,
     },
   });
+
+  console.log(lessonDetail);
 
   if (!lessonDetail) {
     notFound();
@@ -53,7 +59,12 @@ export default async function lessonEditPage({
       </LayoutHeader>
       <LayoutContent>
         <Card>
-          <CardContent className="mt-6"></CardContent>
+          <CardContent className="mt-6">
+            <MdxEditor
+              lessonId={lessonDetail.id}
+              markdown={lessonDetail.content}
+            />
+          </CardContent>
         </Card>
       </LayoutContent>
     </Layout>
