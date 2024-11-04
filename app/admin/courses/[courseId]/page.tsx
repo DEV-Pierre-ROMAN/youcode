@@ -1,4 +1,3 @@
-import UserAvatar from "@/components/features/User/UserAvatar";
 import {
   Layout,
   LayoutContent,
@@ -8,13 +7,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { Typography } from "@/components/ui/Typography";
 import { getRequiredAuthSession } from "@/lib/auth";
 import { ArrowLeft, Edit2 } from "lucide-react";
 import Link from "next/link";
 import { getCourse } from "./course.query";
+import { ListUser } from "./ListUser";
 
 export default async function coursesDetailPage({
   params: { courseId },
@@ -106,22 +104,7 @@ export default async function coursesDetailPage({
                   ? "Utilisateurs inscrits"
                   : "Utilisateur inscrit"}
               </Typography>
-              <ScrollArea className="h-72 rounded-md border">
-                <div className="p-4">
-                  {course.users.map((userOnCourse) => (
-                    <>
-                      <div
-                        key={userOnCourse.user.id}
-                        className="flex items-center"
-                      >
-                        <UserAvatar className="mr-2" user={userOnCourse.user} />
-                        <p>{userOnCourse.user.name}</p>
-                      </div>
-                      <Separator className="my-2" />
-                    </>
-                  ))}
-                </div>
-              </ScrollArea>
+              <ListUser courseId={course.id} users={course.users} />
             </div>
           </div>
         </div>

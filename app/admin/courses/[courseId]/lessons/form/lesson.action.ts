@@ -113,6 +113,9 @@ export const changeLessonRank = authenticatedAction
     if (oldRank < newRank) {
       updatedLesson = await prisma.lesson.updateMany({
         where: {
+          course: {
+            creatorId: ctx.userId,
+          },
           courseId: lessonFind.courseId,
           rank: {
             gte: oldRank,
@@ -126,6 +129,9 @@ export const changeLessonRank = authenticatedAction
     } else {
       updatedLesson = await prisma.lesson.updateMany({
         where: {
+          course: {
+            creatorId: ctx.userId,
+          },
           courseId: lessonFind.courseId,
           rank: {
             gte: newRank,
