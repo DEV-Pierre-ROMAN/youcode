@@ -15,6 +15,10 @@ import { getAuthSession } from "@/lib/auth";
 import { getCourseDetail } from "./course.query";
 import { Circle, CircleCheckBig, CircleDashed } from "lucide-react";
 import { $Enums } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { joinACourse } from "./course.action";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const ProgessLessonPuce = ({ progress }: { progress: $Enums.Progress }) => {
   switch (progress) {
@@ -35,6 +39,8 @@ export default async function CourseDetailPage({
 
   const userId = session?.user.id;
   const course = await getCourseDetail(courseId, userId);
+  const isInCourse =
+    course?.users && course.users.length > 0 ? course.users[0] : null;
 
   if (!course) {
     return <div>Course not found</div>;
@@ -43,7 +49,7 @@ export default async function CourseDetailPage({
   return (
     <Layout>
       <LayoutHeader>
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-4">
           <Avatar className="aspect-square h-20 w-auto">
             <AvatarFallback>
               {course.name.charAt(0).toUpperCase()}
@@ -57,7 +63,29 @@ export default async function CourseDetailPage({
             )}
           </Avatar>
           <div className="flex flex-col gap-2">
-            <LayoutTitle>{course.name}</LayoutTitle>
+            <div className="flex items-center gap-4">
+              <LayoutTitle>{course.name} </LayoutTitle>
+              {userId && !isInCourse && (
+                <form>
+                  <Button
+                    formAction={async () => {
+                      "use server";
+                      const res = await joinACourse({ courseId: course.id });
+                      revalidatePath(`/courses/${course.id}`);
+
+                      if (res?.data?.lessonId) {
+                        redirect(
+                          `/courses/${course.id}/lessons/${res.data.lessonId}`
+                        );
+                      }
+                    }}
+                  >
+                    Join
+                  </Button>
+                </form>
+              )}
+            </div>
+
             <LayoutDescription className="flex items-center gap-2">
               <UserAvatar
                 user={course.creator}

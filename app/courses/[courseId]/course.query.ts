@@ -7,6 +7,11 @@ export async function getCourseDetail(courseId: string, userId: string = "-") {
     },
     include: {
       creator: true,
+      users: {
+        where: {
+          userId: userId,
+        },
+      },
       lessons: {
         orderBy: {
           rank: "asc",

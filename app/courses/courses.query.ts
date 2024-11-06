@@ -8,6 +8,7 @@ export async function getCourses(userId: string | null = null) {
           users: {
             some: {
               userId,
+              canceledAt: null,
             },
           },
         }
