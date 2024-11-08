@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function getCourseDetail(courseId: string, userId: string = "-") {
   return prisma.course.findUnique({
@@ -38,3 +39,5 @@ export async function getCourseDetail(courseId: string, userId: string = "-") {
     },
   });
 }
+
+export type CourseType = Prisma.PromiseReturnType<typeof getCourseDetail>;

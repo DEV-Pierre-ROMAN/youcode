@@ -1,5 +1,4 @@
 import UserAvatar from "@/components/features/User/UserAvatar";
-import { MarkdownProse } from "@/components/features/mdx/MarkdownProse";
 import {
   Layout,
   LayoutContent,
@@ -8,28 +7,14 @@ import {
   LayoutTitle,
 } from "@/components/layout/layout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Typography } from "@/components/ui/Typography";
 import { getAuthSession } from "@/lib/auth";
 import { getCourseDetail } from "./course.query";
-import { Circle, CircleCheckBig, CircleDashed } from "lucide-react";
-import { $Enums } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { joinACourse } from "./course.action";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Course } from "./Course";
 
-const ProgessLessonPuce = ({ progress }: { progress: $Enums.Progress }) => {
-  switch (progress) {
-    case "COMPLETED":
-      return <CircleCheckBig />;
-    case "IN_PROGRESS":
-      return <Circle />;
-    default:
-      return <CircleDashed />;
-  }
-};
 export default async function CourseDetailPage({
   params: { courseId },
 }: {
@@ -41,6 +26,8 @@ export default async function CourseDetailPage({
   const course = await getCourseDetail(courseId, userId);
   const isInCourse =
     course?.users && course.users.length > 0 ? course.users[0] : null;
+
+  await new Promise((resolve) => setTimeout(resolve, 5000));
 
   if (!course) {
     return <div>Course not found</div>;
@@ -97,39 +84,7 @@ export default async function CourseDetailPage({
         </div>
       </LayoutHeader>
       <LayoutContent className="flex flex-col gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Description</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <MarkdownProse markdown={course.presentation || "No description"} />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Lessons</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {course.lessons[0] ? (
-              course.lessons.map((lesson) => (
-                <div
-                  className="flex w-full items-center justify-between rounded border p-4"
-                  key={lesson.id}
-                >
-                  <div className="flex gap-4 items-center">
-                    <ProgessLessonPuce progress={lesson.users[0]?.progress} />
-                    <Typography variant="large">{lesson.name}</Typography>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Badge>{lesson.state}</Badge>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <Typography variant="large">No lessons</Typography>
-            )}
-          </CardContent>
-        </Card>
+        <Course course={course} />
       </LayoutContent>
     </Layout>
   );

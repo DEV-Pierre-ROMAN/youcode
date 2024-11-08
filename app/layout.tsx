@@ -16,7 +16,12 @@ export const metadata: Metadata = {
   description: SiteConfig.description,
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({
+  children,
+  modal,
+}: PropsWithChildren<{
+  modal?: React.ReactNode;
+}>) {
   return (
     <>
       <html lang="en" className="h-full" suppressHydrationWarning>
@@ -34,6 +39,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
               <Footer />
             </div>
             <TailwindIndicator />
+            {modal}
           </Providers>
         </body>
       </html>
