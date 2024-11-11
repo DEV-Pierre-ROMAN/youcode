@@ -7,7 +7,6 @@ import {
   listsPlugin,
   quotePlugin,
   thematicBreakPlugin,
-  markdownShortcutPlugin,
   MDXEditor,
   type MDXEditorMethods,
   type MDXEditorProps,
@@ -19,6 +18,7 @@ import {
   ChangeCodeMirrorLanguage,
   ShowSandpackInfo,
   InsertCodeBlock,
+  BlockTypeSelect,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 
@@ -39,7 +39,6 @@ export default function InitializedMDXEditor({
         listsPlugin(),
         quotePlugin(),
         thematicBreakPlugin(),
-        markdownShortcutPlugin(),
         codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
         codeMirrorPlugin({
           codeBlockLanguages: { js: "JavaScript", css: "CSS" },
@@ -60,6 +59,9 @@ export default function InitializedMDXEditor({
                   fallback: () => (
                     <>
                       <UndoRedo />
+                      <div className="text-black">
+                        <BlockTypeSelect />
+                      </div>
                       <BoldItalicUnderlineToggles />
                       <InsertCodeBlock />
                     </>

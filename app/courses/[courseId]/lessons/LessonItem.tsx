@@ -1,12 +1,7 @@
 import { Typography } from "@/components/ui/Typography";
 import { $Enums } from "@prisma/client";
-import {
-  Badge,
-  Circle,
-  CircleCheckBig,
-  CircleDashed,
-  Link,
-} from "lucide-react";
+import { Circle, CircleCheckBig, CircleDashed } from "lucide-react";
+import Link from "next/link";
 
 type LessonItemProps = {
   lesson: {
@@ -42,9 +37,6 @@ export const LessonItem = ({ lesson, courseId }: LessonItemProps) => {
       <div className="flex items-center gap-4">
         <ProgessLessonPuce progress={lesson.users[0]?.progress} />
         <Typography variant="large">{lesson.name}</Typography>
-      </div>
-      <div className="flex items-center gap-1">
-        <Badge>{lesson.state}</Badge>
       </div>
     </Link>
   );

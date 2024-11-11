@@ -5,7 +5,7 @@ type LessonUserDetailsParam = {
   userId: string;
 };
 
-export async function getLessonDetail({
+export async function getLessonAdminDetail({
   lessonId,
   userId = "-",
 }: LessonUserDetailsParam) {

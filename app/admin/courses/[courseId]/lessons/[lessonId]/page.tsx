@@ -10,7 +10,7 @@ import { Typography } from "@/components/ui/Typography";
 import { getRequiredAuthSession } from "@/lib/auth";
 import { ArrowLeft, Edit2 } from "lucide-react";
 import Link from "next/link";
-import { getLessonDetail } from "./lesson.query";
+import { getLessonAdminDetail } from "./lesson.query";
 
 type lessonDetailPageProps = {
   params: {
@@ -25,7 +25,10 @@ export default async function LessonDetailPage({
   const session = await getRequiredAuthSession();
 
   //fetch the course data
-  const lesson = await getLessonDetail({ userId: session.user.id, lessonId });
+  const lesson = await getLessonAdminDetail({
+    userId: session.user.id,
+    lessonId,
+  });
 
   if (!lesson) {
     throw new Error("Lesson not found");

@@ -18,9 +18,28 @@ export async function getCourseDetail(courseId: string, userId: string = "-") {
           rank: "asc",
         },
         where: {
-          state: {
-            in: ["PUBLISHED", "PUBLIC"],
-          },
+          OR: [
+            {
+              AND: [
+                {
+                  state: "PUBLISHED",
+                },
+                {
+                  course: {
+                    users: {
+                      some: {
+                        userId: userId,
+                        canceledAt: null,
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              state: "PUBLIC",
+            },
+          ],
         },
         select: {
           id: true,
