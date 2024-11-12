@@ -27,7 +27,6 @@ export default async function CourseDetailPage({
   const isInCourse =
     course?.users && course.users.length > 0 ? course.users[0] : null;
 
-  await new Promise((resolve) => setTimeout(resolve, 5000));
   if (!course) {
     return <div>Course not found</div>;
   }
