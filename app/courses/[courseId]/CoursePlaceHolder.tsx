@@ -17,7 +17,7 @@ export const CoursePlaceHolder = () => {
         <CardHeader>
           <CardTitle>Lessons</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-2">
           {Array.from({ length: 3 }).map((_, index) => (
             <LessonItemPlaceHolder key={index} />
           ))}

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CourseType } from "./course.query";
-import { MarkdownProse } from "@/components/features/mdx/MarkdownProse";
+import { MDXProse } from "@/components/features/mdx/MDXProse";
 import { Typography } from "@/components/ui/Typography";
 import { LessonItem } from "./lessons/LessonItem";
 
@@ -16,14 +16,14 @@ export const Course = ({ course }: CourseProps) => {
           <CardTitle>Description</CardTitle>
         </CardHeader>
         <CardContent>
-          <MarkdownProse markdown={course?.presentation || "No description"} />
+          <MDXProse markdown={course?.presentation || "No description"} />
         </CardContent>
       </Card>
       <Card>
         <CardHeader>
           <CardTitle>Lessons</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-2">
           {course?.lessons[0] ? (
             course.lessons.map((lesson) => (
               <LessonItem

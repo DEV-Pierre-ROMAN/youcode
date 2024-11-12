@@ -20,7 +20,11 @@ export default function CourseItem({ course }: { course: CourseCard }) {
         )}
       </Avatar>
       <div className="font-roboto absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-40 text-center text-2xl font-medium text-white transition hover:bg-opacity-60">
-        <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-secondary px-2 py-1">
+        <div
+          className={
+            "absolute right-2 top-2 flex items-center gap-1 rounded-full bg-secondary px-2 py-1"
+          }
+        >
           <UserAvatar className="size-5" user={course.creator} />
           <Typography variant="small">{course.creator.name}</Typography>
         </div>

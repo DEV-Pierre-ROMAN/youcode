@@ -12,9 +12,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 const LessonDetailPage = async () => {
   return (
     <div className="flex flex-wrap p-4">
-      <Card className="flex min-w-full flex-col gap-4 p-3 lg:min-w-56 xl:min-w-72">
+      <Card className="xl:w-90 flex w-full flex-col gap-4 p-3 lg:w-72">
         <Typography variant="h3">Loading ...</Typography>
-        <ul>
+        <ul className="flex flex-col gap-2">
           {Array.from({ length: 3 }).map(() => (
             <li>
               <LessonItemPlaceHolder />
@@ -22,7 +22,7 @@ const LessonDetailPage = async () => {
           ))}
         </ul>
       </Card>
-      <Layout className="xl:max-w-4xl 2xl:max-w-6xl">
+      <Layout className="lg:flex-1 xl:max-w-4xl 2xl:max-w-6xl">
         <LayoutHeader>
           <LayoutTitle>Loading ...</LayoutTitle>
         </LayoutHeader>
