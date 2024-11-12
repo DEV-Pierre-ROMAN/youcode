@@ -19,7 +19,6 @@ const InterceptCourseDetailPage = async ({
 
   return (
     <CourseDialog course={course}>
-      <p>Test</p>
       <Course course={course} />
     </CourseDialog>
   );

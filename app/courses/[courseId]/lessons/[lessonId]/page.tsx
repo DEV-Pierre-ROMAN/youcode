@@ -11,6 +11,9 @@ import { Typography } from "@/components/ui/Typography";
 import { Card } from "@/components/ui/card";
 import { LessonItem } from "../LessonItem";
 import { MDXProse } from "@/components/features/mdx/MDXProse";
+import { Separator } from "@/components/ui/separator";
+import { changeLessonState } from "./lesson.action";
+import { ButtonCompleteCourse } from "./ButtonCompleteCourse";
 
 const LessonDetailPage = async ({
   params: { courseId, lessonId },
@@ -24,9 +27,16 @@ const LessonDetailPage = async ({
 
   const userId = session?.user.id;
 
-  const course = await getCourseDetail(courseId, userId);
+  let course = await getCourseDetail(courseId, userId);
   if (!course) {
     return <p>Course not found</p>;
+  }
+
+  const lessonProgress = course.lessons.find((lesson) => lesson.id === lessonId)
+    ?.users[0]?.progress;
+  if (!lessonProgress || lessonProgress === "NOT_STARTED") {
+    await changeLessonState({ lessonId: lessonId, newState: "IN_PROGRESS" });
+    course = (await getCourseDetail(courseId, userId)) || course;
   }
 
   const lesson = await getLessonDetail(lessonId, userId);
@@ -52,6 +62,14 @@ const LessonDetailPage = async ({
         </LayoutHeader>
         <LayoutContent>
           <MDXProse markdown={lesson.content} />
+          {userId && (
+            <>
+              <Separator />
+              <div className="flex justify-end p-4">
+                <ButtonCompleteCourse courseId={courseId} lessonId={lessonId} />
+              </div>
+            </>
+          )}
         </LayoutContent>
       </Layout>
     </div>
