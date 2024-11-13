@@ -36,7 +36,7 @@ export default function UserProfile(props: UserCardProps) {
         </Link>
         <Link
           className={buttonVariants({ variant: "outline", size: "lg" })}
-          href="/admin/courses"
+          href="/admin"
         >
           Admin
         </Link>
